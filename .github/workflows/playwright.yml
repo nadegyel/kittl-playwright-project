@@ -32,12 +32,12 @@ jobs:
 
       - name: Run Playwright tests in Docker
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL: nadya0704@gmail.com
+          PASSWORD: e3#6heR$Aq$LG.d
         run: |
           docker run -v ${{ github.workspace }}:/app -w /app --rm \
-          -e EMAIL=${{ secrets.EMAIL }} \
-          -e PASSWORD=${{ secrets.PASSWORD }} \
+          -e EMAIL=nadya0704@gmail.com \
+          -e PASSWORD=e3#6heR$Aq$LG.d \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
           npx playwright test --reporter=list
           
