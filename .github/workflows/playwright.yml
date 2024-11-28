@@ -25,13 +25,14 @@ jobs:
           PASSWORD: e3#6heR$Aq$LG.d
         run: |
           mkdir -p playwright-report
-          docker run -v ${{ github.workspace }}:/app -w /app --rm \
+          docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
           -e EMAIL=nadya0704@gmail.com \
           -e PASSWORD=e3#6heR$Aq$LG.d \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
-          npx playwright test --reporter=html --output=playwright-report || true
+          sh -c "mkdir -p playwright-report && npx playwright test"
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report

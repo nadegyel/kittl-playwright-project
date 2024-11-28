@@ -9,7 +9,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
-  reporter: [["list"], ["html", { open: "on-failure" }]],
+  reporter: [
+    ["list"],
+    ["html", { outputFolder: "playwright-report", open: "on-failure" }],
+  ],
 
   use: {
     baseURL: "https://www.kittl.com",
