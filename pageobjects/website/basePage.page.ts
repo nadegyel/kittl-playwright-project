@@ -15,7 +15,7 @@ export default class BasePage {
   // Actions
   //-------------------------------------------------------------------------------------------------------------------
   async acceptCookies() {
-    await this.allowCookiesButton().click();
+    await this.allowCookiesButton().click({ timeout: 5000 });
   }
 
   async navigateTo(path: string) {
