@@ -28,7 +28,7 @@ jobs:
           -e EMAIL=nadya0704@gmail.com \
           -e PASSWORD=e3#6heR$Aq$LG.d \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
-          sh -c "mkdir -p playwright-report && npx playwright test"
+          sh -c "npm ci && mkdir -p playwright-report && npx playwright test --reporter=html"
 
       - name: Upload Playwright HTML Report
         uses: actions/upload-artifact@v4
