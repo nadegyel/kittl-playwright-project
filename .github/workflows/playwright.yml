@@ -47,11 +47,11 @@ jobs:
           EMAIL: nadya0704@gmail.com
           PASSWORD: e3#6heR$Aq$LG.d
         run: |
-         docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
-         -e EMAIL=nadya0704@gmail.com \
-         -e PASSWORD=e3\#6heR\$Aq\$LG.d \          
+          docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
+          -e EMAIL=$EMAIL \
+          -e PASSWORD=$PASSWORD \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
-         npx playwright test 
+          npx playwright test
 
       - name: Debug workspace for report
         run: |
