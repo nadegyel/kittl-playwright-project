@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies
         run: |
@@ -45,14 +45,13 @@ jobs:
       - name: Run Playwright tests in Docker
         env:
           EMAIL: nadya0704@gmail.com
-          PASSWORD: e3#6heR$Aq$LG.d
+          PASSWORD: e3#6heR$Aq$LG.d|
         run: |
-          mkdir -p playwright-report
-          docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
-          -e EMAIL=nadya0704@gmail.com \
-          -e PASSWORD=e3#6heR$Aq$LG.d \
+         docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
+         -e EMAIL=nadya0704@gmail.com \
+          -e PASSWORD=e3\#6heR\$Aq\$LG.d \          
           mcr.microsoft.com/playwright:v1.49.0-jammy \
-          sh -c "npm ci && npx playwright test --reporter=html --output=playwright-report"
+         npx playwright test 
 
       - name: Debug workspace for report
         run: |
