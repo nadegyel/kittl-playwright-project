@@ -1,4 +1,4 @@
-name: Playwright Tests Debug
+name: Playwright Tests
 
 on:
   workflow_dispatch:
@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - fix/fix-github-workflow
 
 jobs:
   playwright-tests:
@@ -33,11 +32,12 @@ jobs:
           docker pull mcr.microsoft.com/playwright:v1.49.0-jammy
 
       - name: Run Playwright tests in Docker
+        timeout-minutes: 3
         env:
           EMAIL: nadya0704@gmail.com
           PASSWORD: e3#6heR$Aq$LG.d
         run: |
-          timeout 10m docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
+          docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
           -e EMAIL=$EMAIL \
           -e PASSWORD=$PASSWORD \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
