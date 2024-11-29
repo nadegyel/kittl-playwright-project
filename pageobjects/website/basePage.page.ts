@@ -20,6 +20,7 @@ export default class BasePage {
 
   async navigateTo(path: string) {
     await this.page.goto(path);
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickPlansButton() {
