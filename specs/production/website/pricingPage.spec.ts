@@ -8,19 +8,17 @@ const email = process.env.EMAIL!;
 const password = process.env.PASSWORD!;
 
 test.describe("Pricing page tests", () => {
-  // test.beforeEach(async ({ basePage }) => {
-  //   await basePage.navigateTo("/");
-  //   await basePage.acceptCookies();
-  // });
+  test.beforeEach(async ({ basePage }) => {
+    await basePage.navigateTo("/");
+    await basePage.acceptCookies();
+  });
 
   test("Navigate to pricing page and verify all plans are displayed", async ({
     basePage,
     pricingPage,
   }) => {
-    await basePage.navigateTo("/");
-    await basePage.acceptCookies();
     await basePage.clickPlansButton();
-    await expect.soft(pricingPage.proPlanTitle()).toBeVisible(); //with `soft` test will complete to execute all assertions, and won't terminate if one is failing
+    await expect.soft(pricingPage.proPlanTitle()).toBeVisible(); //`soft` will allow to complete all assertions, and won't terminate if one is failing
     await expect.soft(pricingPage.freePlanTitle()).toBeVisible();
     await expect.soft(pricingPage.expertPlanTitle()).toBeVisible();
   });
@@ -30,8 +28,6 @@ test.describe("Pricing page tests", () => {
     pricingPage,
     loginModal,
   }) => {
-    await basePage.navigateTo("/");
-    await basePage.acceptCookies();
     await basePage.clickPlansButton();
     await pricingPage.selectProPlan();
     await loginModal.signIn(email, password);
