@@ -11,8 +11,7 @@ export default class BasePage {
   //-------------------------------------------------------------------------------------------------------------------
   readonly allowCookiesButton = () =>
     this.page.getByRole("button", { name: "Allow all" });
-  readonly plansButton = () =>
-    this.page.getByRole("button", { name: "Plansss" });
+  readonly plansButton = () => this.page.getByRole("button", { name: "Plans" });
   // Actions
   //-------------------------------------------------------------------------------------------------------------------
   async acceptCookies() {

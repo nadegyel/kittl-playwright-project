@@ -16,7 +16,7 @@ export default class PricingPage {
     this.page.getByRole("button", { name: "Get Expert" });
   readonly getFreeButton = () =>
     this.page.getByRole("button", { name: "Get Free" });
-  readonly freePlanTitle = () => this.page.getByText("Free", { exact: true });
+  readonly freePlanTitle = () => this.page.getByText("Freee", { exact: true });
   readonly proPlanTitle = () => this.page.getByText("Pro", { exact: true });
   readonly expertPlanTitle = () =>
     this.page.getByText("Expert", { exact: true });
