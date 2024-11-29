@@ -1,22 +1,46 @@
-name: Playwright Tests
+name: Playwright Tests Debug
 
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 14 * * *'
   push:
-    branches:
-      - main
+   branches:
+     - main
+     - fix/fix-github-workflow
+
+
 jobs:
   playwright-tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install
+
+      - name: Debug dependencies installation
+        run: |
+          ls -la node_modules
+          ls -la node_modules/@playwright
 
       - name: Set up Docker
-        run: docker pull mcr.microsoft.com/playwright:v1.49.0-jammy
+        run: |
+          docker pull mcr.microsoft.com/playwright:v1.49.0-jammy
+
+      - name: Debug Docker setup
+        run: |
+          docker images
 
       - name: Run Playwright tests in Docker
         env:
@@ -24,14 +48,24 @@ jobs:
           PASSWORD: e3#6heR$Aq$LG.d
         run: |
           mkdir -p playwright-report
-          docker run -v ${{ github.workspace }}:/app -w /app --rm \
+          docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
           -e EMAIL=nadya0704@gmail.com \
           -e PASSWORD=e3#6heR$Aq$LG.d \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
-          npx playwright test --reporter=html --output=playwright-report || true
-      - uses: actions/upload-artifact@v4
+          sh -c "npm ci && npx playwright test --reporter=html --output=playwright-report"
+
+      - name: Debug workspace for report
+        run: |
+          ls -la playwright-report
+
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 7
+
+      - name: Debug test-results directory
+        run: |
+          ls -la test-results
