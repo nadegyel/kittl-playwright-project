@@ -11,6 +11,7 @@ on:
 
 jobs:
   playwright-tests:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +33,7 @@ jobs:
           docker pull mcr.microsoft.com/playwright:v1.49.0-jammy
 
       - name: Run Playwright tests in Docker
+        timeout-minutes: 3
         env:
           EMAIL: nadya0704@gmail.com
           PASSWORD: e3#6heR$Aq$LG.d
