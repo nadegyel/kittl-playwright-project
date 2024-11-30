@@ -18,9 +18,7 @@ test.describe("Pricing page tests", () => {
     pricingPage,
   }) => {
     await basePage.clickPlansButton();
-    await expect.soft(pricingPage.proPlanTitle()).toBeVisible(); //`soft` will allow to complete all assertions, and won't terminate if one is failing
-    await expect.soft(pricingPage.freePlanTitle()).toBeVisible();
-    await expect.soft(pricingPage.expertPlanTitle()).toBeVisible();
+    await pricingPage.verifyAllPlansAreVisible();
   });
 
   test("Navigate to pricing page and log in to select Pro Plan", async ({
@@ -31,7 +29,6 @@ test.describe("Pricing page tests", () => {
     await basePage.clickPlansButton();
     await pricingPage.selectProPlan();
     await loginModal.signIn(email, password);
-    await expect.soft(pricingPage.proPlanSubscriptionModal()).toBeVisible();
-    await expect.soft(pricingPage.proceedToCheckoutButton()).toBeEnabled();
+    await pricingPage.verifyProPlan();
   });
 });
