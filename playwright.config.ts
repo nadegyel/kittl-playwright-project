@@ -11,7 +11,13 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: [
     ["list"],
-    ["html", { outputFolder: "playwright-report", open: "on-failure" }],
+    [
+      "html",
+      {
+        outputFolder: "playwright-report",
+        open: process.env.CI ? "never" : "on-failure",
+      },
+    ],
   ],
 
   use: {
