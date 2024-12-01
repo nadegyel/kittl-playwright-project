@@ -1,67 +1,106 @@
-# **Welcome to Kittl's QA Assignment**
+# **Kittl Automation Project**
 
-**Time for completion**: 1 week from the date of assignment.
+## **Overview**
+This project automates critical scenarios for Kittl's Pricing Page using **Playwright**. The tests are designed to ensure functionality across multiple browsers and can run in a containerized environment. For the manual test scenarios, please see [manual-tests.md](./manual-tests.md).
 
-**Evaluation Criteria**:
 
-Evaluation will be based on both parts of the assessment, with equal weight given to Task 1 (Manual Part) and Task 2 (Automation Part). Evaluation will be done via a PR to the repo given to you for the assignment.
+---
+## Code Structure
+This project follows the Page Object Model (POM) design pattern to organize test code for better maintainability and reusability. Selectors in the page object classes are defined as functions instead of static variables. This approach ensures that the elements are fetched from the DOM only when the method is called, and not when the class is instantiated, reduces unnecessary DOM queries, and ensures that the latest state of the DOM is always used, which is especially useful for elements that may change dynamically or load asynchronously.
 
-### **Assessment Overview**
+---
 
-The assessment consists of two main parts:
+## Getting Started
 
-* **Task 1 (Manual)**: Create a detailed checklist for manual testing of a specific feature.  
-* **Task 2 (Automation)**: Write automated test cases for the same feature.
+### Prerequisites
 
-**Instructions**:
+### Install the dependencies
 
-Please carefully review the instructions and tasks below, as well as the details on accessing the functionality to be tested.
+Run the following command to install all dependencies in playwright folder:
 
-### **Task 1: Manual Testing Checklist**
+```bash
+npm install
+npx playwright install
+```
+### **Environment Variables**
 
-* #### **Part 1**
+Create a `.env` file in the root directory to provide test credentials:
+```env
+EMAIL=nadya0704@gmail.com
+PASSWORD=e3#6heR$Aq$LG.d
+```    
+---
 
-  Familiarize yourself with the presented functional block. Based on your analysis, create a checklist of test scenarios that cover the functionality of the **"Pricing page"** as thoroughly as possible.  
-  **Scope**: The checklist should focus on all key functionalities before the actual purchase step (no need to complete a purchase).
+## Running Tests
+### Run All Tests
+Run all tests in the project:
+```bash
+npx playwright test
+```
+### Run Specific Test
+To run a specific test by name:  
 
-* #### **Part 2**
+```bash
+npx playwright test --grep "Navigate to pricing page and log in to select Pro Plan"
+```
 
-  Choose two checks from your checklist and write detailed test cases for them.  
-  ***Note:*** There are no specific format requirements for the checklist, and there is no limit on the number of checks you can include.
+### Run Tests in Headed Mode
+Run all tests in a visible browser:
+```bash
+npx playwright test --headed 
+```
+### Run Tests in a Specific Browser
+```bash
+npx playwright test --project=chromium
+```
+---
 
-### **Task 2: Automation**
+## Generate and View Reports
+Test results (including screenshots and videos on failure) are available in the generated Playwright HTML report. To generate and open the HTML report after test run:
+```bash
+npx playwright show-report 
+```
+---
 
-#### **Part 1**
+## Dockerized Testing
+### Docker Image
+This project uses the official Playwright Docker image, ensure you pull it:
+```bash
+docker pull mcr.microsoft.com/playwright:v1.49.0-jammy 
+```
+###  Run Tests in Docker
+Run the tests inside the container:
+```bash
+docker run -v $(pwd):/app -w /app --rm mcr.microsoft.com/playwright:v1.49.0-jammy npx playwright test
+```
+---
 
-Think through the critical test cases of this tool.
-Install the project by running `npm i` in terminal.
-Implement 2 of chosen critical scenarios, setup GitHub actions and send us the link to the repository with your solution. 
+## GitHub Actions Workflow
 
-**Requirements:**
+The Playwright tests in this repository are automated to run using GitHub Actions. The workflow is designed to run tests in a Dockerized environment with the following key configurations:
 
-* Tests can run in different browsers.  
-* Tests capture screenshots on failure.  
-* Tests run in parallel.  
-* Test app is containerized.  
-* README.md file contains the instructions on how to install and run tests.
+### Workflow Configuration
+- **Workflow Triggers:**
+    - Manually via GitHub Actions UI.
+    - On a daily schedule at 14:00 UTC.
+    - On every push to the `main` branch.
+- **Environment:**
+    - Uses the official Playwright Docker image: `mcr.microsoft.com/playwright:v1.49.0-jammy`.
 
-#### **Part 2**
+### How to View the Report
+- Download the `playwright-report` artifact from the workflow run page, after the run has completed.
+- Extract the artifact locally and open the `index.html` file in a browser to view the test results.
 
-Having automated test - rocks! But what's better is to have something that runs them... automatically. 
+### Known Limitations
+**No Secrets Used**: Due to administrative restrictions, sensitive information like the `EMAIL` and `PASSWORD` could not be stored securely in GitHub Secrets. These are currently hardcoded into the workflow file.
 
-As we are already using GitHub, it would make sense to use [GitHub actions](https://docs.github.com/en/actions)
 
-Please make sure that the action runs on the following conditions:
-1. Manually - it should be possible to trigger test at any moment through github ui
-2. Daily - sometime in the afternoon will be fine
-3. On change - every time code for test changes it would be nice to run it, to make sure that it works!
+### Potential Improvements
+1. **Secrets Management**:
+    - Store sensitive information like `EMAIL` and `PASSWORD` in GitHub Secrets instead of hardcoding them in the workflow file.
+    - Update the workflow to reference these secrets.
 
-**Small Note:** you will need to add code directly to the `main` branch to test this part.
+2. **Cookies Banner Behaviour**:
+   - Investigate and address the inconsistent behavior of the cookies banner within the Docker container. While Docker ensures an isolated environment, there were cases where the banner was not displayed for every browser session as expected. This could indicate that some sessions are not completely fresh or that the application server behaves differently under certain conditions. Potential fixes include explicitly clearing cookies or storage before every test run.  
 
-### **Access Instructions**
 
-Environment: [**kittl.com**](https://kittl.com/).
-
-Pricing page: **[pricing](https://www.kittl.com/pricing).**
-
-More detailed information about Subscriptions can be found on the following page: https://www.kittl.com/help/subscription.
