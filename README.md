@@ -91,16 +91,40 @@ The Playwright tests in this repository are automated to run using GitHub Action
 - Download the `playwright-report` artifact from the workflow run page, after the run has completed.
 - Extract the artifact locally and open the `index.html` file in a browser to view the test results.
 
-### Known Limitations
+---
+
+## Supported Browsers and Parallel Execution
+
+### Browsers
+Tests are executed on the following browsers:
+- **Chromium** 
+- **Firefox**
+- **Webkit** 
+
+These configurations ensure cross-browser compatibility.
+
+### Parallel Execution
+Tests run in parallel for faster execution:
+- **CI**: Configured with 2 workers.
+- **Local**: Optimal workers are determined automatically based on system resources.
+
+A total of **6 tests (2 test cases × 3 browsers)** are distributed across the available workers.
+
+---
+
+## Known Limitations
 **No Secrets Used**: Due to administrative restrictions, sensitive information like the `EMAIL` and `PASSWORD` could not be stored securely in GitHub Secrets. These are currently hardcoded into the workflow file.
 
+--- 
 
-### Potential Improvements
+## Potential Improvements
 1. **Secrets Management**:
     - Store sensitive information like `EMAIL` and `PASSWORD` in GitHub Secrets instead of hardcoding them in the workflow file.
     - Update the workflow to reference these secrets.
 
 2. **Cookies Banner Behaviour**:
    - Investigate and address the inconsistent behavior of the cookies banner within the Docker container. While Docker ensures an isolated environment, there were cases where the banner was not displayed for every browser session as expected. This could indicate that some sessions are not completely fresh or that the application server behaves differently under certain conditions. Potential fixes include explicitly clearing cookies or storage before every test run.  
+
+---
 
 
