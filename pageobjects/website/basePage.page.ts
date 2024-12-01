@@ -9,17 +9,22 @@ export default class BasePage {
 
   // Elements
   //-------------------------------------------------------------------------------------------------------------------
-  readonly allowCookiesButton = () =>
+  private allowCookiesButton = () =>
     this.page.getByRole("button", { name: "Allow all" });
-  readonly plansButton = () => this.page.getByRole("button", { name: "Plans" });
+
+  private plansButton = () => this.page.getByRole("button", { name: "Plans" });
   // Actions
   //-------------------------------------------------------------------------------------------------------------------
   async acceptCookies() {
-    await this.allowCookiesButton().click({ timeout: 5000 });
+    if (await this.allowCookiesButton().isVisible({ timeout: 5000 })) {
+      //handle cookies' inconsistency
+      await this.allowCookiesButton().click();
+    }
   }
 
   async navigateTo(path: string) {
     await this.page.goto(path);
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickPlansButton() {

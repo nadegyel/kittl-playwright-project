@@ -7,31 +7,49 @@ on:
   push:
     branches:
       - main
+
 jobs:
   playwright-tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install
 
       - name: Set up Docker
-        run: docker pull mcr.microsoft.com/playwright:v1.49.0-jammy
+        run: |
+          docker pull mcr.microsoft.com/playwright:v1.49.0-jammy
 
       - name: Run Playwright tests in Docker
         env:
           EMAIL: nadya0704@gmail.com
           PASSWORD: e3#6heR$Aq$LG.d
         run: |
-          mkdir -p playwright-report
-          docker run -v ${{ github.workspace }}:/app -w /app --rm \
-          -e EMAIL=nadya0704@gmail.com \
-          -e PASSWORD=e3#6heR$Aq$LG.d \
+          docker run -v ${{ github.workspace }}:/workspace -w /workspace --rm \
+          -e CI=true \
+          -e EMAIL=$EMAIL \
+          -e PASSWORD=$PASSWORD \
           mcr.microsoft.com/playwright:v1.49.0-jammy \
-          npx playwright test --reporter=html --output=playwright-report || true
-      - uses: actions/upload-artifact@v4
+          npx playwright test
+
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 7
+
+# This workflow uses the Playwright Docker image (mcr.microsoft.com/playwright:v1.49.0-jammy)
+# It uploads an HTML report after execution.

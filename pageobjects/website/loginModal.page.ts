@@ -8,11 +8,14 @@ export default class LoginModal extends BasePage {
 
   // Elements
   //-------------------------------------------------------------------------------------------------------------------
-  readonly signInButton = () =>
+  private signInButton = () =>
     this.page.getByTestId("auth-modal--container").getByText("Sign in");
-  readonly emailInput = () => this.page.getByPlaceholder("E-Mail");
-  readonly passwordInput = () => this.page.getByPlaceholder("Password");
-  readonly loginButton = () => this.page.getByTestId("login");
+
+  private emailInput = () => this.page.getByPlaceholder("E-Mail");
+
+  private passwordInput = () => this.page.getByPlaceholder("Password");
+
+  private loginButton = () => this.page.getByTestId("login");
 
   // Actions
   //-------------------------------------------------------------------------------------------------------------------
