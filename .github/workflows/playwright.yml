@@ -53,4 +53,3 @@ jobs:
 
 # This workflow uses the Playwright Docker image (mcr.microsoft.com/playwright:v1.49.0-jammy)
 # It uploads an HTML report after execution.
-# The 10-minute timeout ensures tests don't hang indefinitely.

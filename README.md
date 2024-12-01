@@ -108,7 +108,6 @@ Tests run in parallel for faster execution:
 - **CI**: Configured with 2 workers.
 - **Local**: Optimal workers are determined automatically based on system resources.
 
-A total of **6 tests (2 test cases × 3 browsers)** are distributed across the available workers.
 
 ---
 
@@ -120,7 +119,6 @@ A total of **6 tests (2 test cases × 3 browsers)** are distributed across the a
 ## Potential Improvements
 1. **Secrets Management**:
     - Store sensitive information like `EMAIL` and `PASSWORD` in GitHub Secrets instead of hardcoding them in the workflow file.
-    - Update the workflow to reference these secrets.
 
 2. **Cookies Banner Behaviour**:
    - Investigate and address the inconsistent behavior of the cookies banner within the Docker container. While Docker ensures an isolated environment, there were cases where the banner was not displayed for every browser session as expected. This could indicate that some sessions are not completely fresh or that the application server behaves differently under certain conditions. Potential fixes include explicitly clearing cookies or storage before every test run.  

@@ -11,27 +11,27 @@ export default class PricingPage {
   // Elements
   //-------------------------------------------------------------------------------------------------------------------
   //Pricing Page
-  readonly getProButton = () =>
+  private getProButton = () =>
     this.page.getByRole("button", { name: "Get Pro" });
 
-  readonly getExpertButton = () =>
+  private getExpertButton = () =>
     this.page.getByRole("button", { name: "Get Expert" });
 
-  readonly getFreeButton = () =>
+  private getFreeButton = () =>
     this.page.getByRole("button", { name: "Get Free" });
 
-  readonly freePlanTitle = () => this.page.getByText("Free", { exact: true });
+  private freePlanTitle = () => this.page.getByText("Free", { exact: true });
 
-  readonly proPlanTitle = () => this.page.getByText("Pro", { exact: true });
+  private proPlanTitle = () => this.page.getByText("Pro", { exact: true });
 
-  readonly expertPlanTitle = () =>
+  private expertPlanTitle = () =>
     this.page.getByText("Expert", { exact: true });
 
   //Subscription Modal
-  readonly proceedToCheckoutButton = () =>
+  private proceedToCheckoutButton = () =>
     this.page.getByText("Proceed to Checkout –>");
 
-  readonly proPlanSubscriptionModal = () =>
+  private proPlanSubscriptionModal = () =>
     this.page.getByRole("heading", { name: "Upgrade to Pro plan" });
   // Actions
   //-------------------------------------------------------------------------------------------------------------------
