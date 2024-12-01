@@ -1,7 +1,7 @@
 # **Kittl Automation Project**
 
 ## **Overview**
-This project automates critical scenarios for Kittl's Pricing Page using **Playwright**. The tests are designed to ensure functionality across multiple browsers and can run in a containerized environment. For the manual test scenarios, please see [manual-tests.md](./manual-tests.md).
+This project automates critical scenarios for Kittl's Pricing Page using **Playwright**. The tests are designed to ensure functionality across multiple browsers and can run in a containerized environment. For the manual test scenarios, please see [manual-tests.md](./MANUAL-TESTS.md).
 
 
 ---
